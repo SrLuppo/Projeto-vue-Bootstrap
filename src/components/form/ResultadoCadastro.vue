@@ -22,7 +22,7 @@
                     <p class="tituloInput" id="pagamento"></p> -->
             </div>
 
-            <a type="submit" class="buttonCadastro btn" href="/">CADASTRAR PROFISSIONAL</a><br/>
+            <a type="submit" class="buttonCadastro btn" href="/conclusao">CADASTRAR PROFISSIONAL</a><br/>
             <a style="font-family: 'Comfortaa', cursive;color:#483698;" @click="$router.push('/')" >Editar cadastro</a>
         </div>
     <img src="../../assets/desktop-pagina-3.png" style="width:400px;height:400px;"  class="rounded" >

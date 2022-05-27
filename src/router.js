@@ -3,7 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Profissional from "./views/Profissional.vue";
 import Atendimento from "./views/Atendimento.vue";
 import Cadastro from "./views/Cadastro.vue";
-
+import conclusao from "./components/form/Final";
 const routes = [
     {
         path: '/',
@@ -19,6 +19,11 @@ const routes = [
         path: '/cadastro',
         name: 'cadastro',
         component: Cadastro
+    },
+    {
+        path: '/conclusao',
+        name: 'conclusao',
+        component: conclusao
     },
 ];
 
