@@ -12,7 +12,6 @@
     import Subtitulo from '../components/header/Subtitulo.vue'
     import FormProfissional from '../components/form/FormProfissional.vue'
 
-
     export default {
         name: 'Profissional',
         components: {
