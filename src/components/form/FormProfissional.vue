@@ -49,21 +49,14 @@
             <div class="row">
                 <div class="col">
                     <label class="tituloInput"  >Estado*</label>
-                        <select required v-model="formValues.estados" placeholder="Selecione" class="form-control inputSelect" name="select1" id="select1">            
-                            <option value="Paraná">Paraná</option>
-                            <option value="Rio Grande do Sul">Rio Grande do Sul</option>
-                            <option value="Santa Catarina">Santa Catarina</option>
+                        <select required  @change="getCidades()" name="Estados" v-model="selectedEstadoId"  id="" placeholder="Selecione" class="form-control inputSelect" >            
+                            <option  v-for="(estado,index) in estados" v-bind:key="index" :value="estado.id">{{estado.nome}}</option>
                         </select>
                 </div>
                 <div class="col">
                     <label class="tituloInput" >Cidade*</label>
-                        <select required v-model="formValues.cidades"  placeholder="Selecione" class="form-control inputSelect" name="select2" id="select2">
-                            <option value="Londrina">Londrina</option>
-                            <option value="Maringá">Maringá</option>
-                            <option value="Pelotas">Pelotas</option>
-                            <option value="Porto Alegre">Porto Alegre</option>
-                            <option value="Florianópolis">Florianópolis</option>
-                            <option value="Joinville">Joinville</option>
+                        <select required   placeholder="Selecione" class="form-control inputSelect" name="cidades" id="">
+                            <option v-for="(cidade,index) in cidades" v-bind:key="index" :value="cidade.nome">{{cidade.nome}}</option>
                         </select>
                 </div>
             </div>
@@ -93,6 +86,7 @@
 </template>
 
 <script>
+import axios from "axios";
         
     //CPF
          document.addEventListener('keydown', function(event) { //pega o precionar uma tecla
@@ -127,11 +121,12 @@
             return{        
                 Titulo: 'Sobre o profissional',
                 Subtitulo: 'Dados do profissional',
+                estados: this.getEstados(),
+                cidades: '',
+                selectedEstadoId: 1,
                 formValues:{
                     nome: '',
                     cpf: '',
-                    estados: '',
-                    cidades: ''
                 }
             }
 
@@ -147,19 +142,39 @@
                     return true;
                 }
             },
+            getCidades(){
+         axios.get('https://api-teste-front-end-fc.herokuapp.com/cidades',{ 
+           params:{ 
+             estadoId: this.selectedEstadoId 
+             }})
+           .then((res)=>{
+             this.cidades = res.data
+            //  console.log(res.data)
+           })
+           .catch((error)=>{
+             console.log(error)
+           })
+        },
+        getEstados(){
+            axios.get('https://api-teste-front-end-fc.herokuapp.com/estados')
+           .then((res)=>{
+             this.estados = res.data
+            //  console.log(res.data)
+           })
+           .catch((error)=>{
+             console.log(error)
+           })
+        },
             save_data() {
                 var inputNome = document.getElementById("name");
                 var inputCPF = document.getElementById("CPF");
                 var inputNumero = document.getElementById("phone");
-                var inputEstado = document.getElementById("select1");
-                var inputCidade = document.getElementById("select2");
+               
 
                 localStorage.setItem("name", inputNome.value); 
                 localStorage.setItem("CPF", inputCPF.value);
                 localStorage.setItem("phone", inputNumero.value); 
-                localStorage.setItem("select1", inputEstado.value);
-                localStorage.setItem("select2", inputCidade.value);
-                
+                               
             }
         
         }

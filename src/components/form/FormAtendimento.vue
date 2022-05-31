@@ -10,13 +10,7 @@
             <div class="form-group">
                 <label class="tituloInput" for="name">Especialidade Principal*</label>
                 <select v-model="formAtend.especialidades" id="tipoConsulta" required class="form-control inputSelect" >
-                    <option value="0" disabled selected>Selecione a especialidade</option>
-                    <option value="Cardiologia">Cardiologia</option>
-                    <option value="Dermatologia">Dermatologia</option>
-                    <option value="Neurologia">Neurologia</option>
-                    <option value="Oftalmologia">Oftalmologia</option>
-                    <option value="Psiquiatria">Psiquiatria</option>
-                    <option value="Urologia">Urologia</option>
+                      <option v-for="(especialidade,index) in especialidades" v-bind:key="index" :value="especialidade.nome">{{especialidade.nome}}</option>
                 </select>
             </div>
 
@@ -86,6 +80,7 @@
 </template>
 
 <script>
+import axios from "axios";
     
     export default{
         name: 'FormAtendimento',
@@ -93,8 +88,8 @@
             return{        
                 Titulo: 'Sobre o atendimento',
                 Subtitulo: 'Detalhes do atendimento',
-                formAtend:{
-                    especialidades: '',
+                especialidades:  this.getEspecialidades(),
+                formAtend:{                    
                     valor: '',
                     pagamento: ''
                 }
@@ -106,6 +101,17 @@
                 var storeFormAtend = localStorage.setItem('FormAtend', JSON.stringify(this.formAtend))
                 console.log('FormAtend', JSON.stringify(this.formAtend))
             },
+            getEspecialidades(){
+            axios.get('https://api-teste-front-end-fc.herokuapp.com/especialidades')
+           .then((res)=>{
+             this.especialidades = res.data
+            //  console.log(res.data)
+           })
+           .catch((error)=>{
+             console.log(error)
+           })
+            },
+            
             save_data() {
                 var inputConsulta = document.getElementById("tipoConsulta");
                 var inputDinheiro = document.getElementById("dinheiro");
